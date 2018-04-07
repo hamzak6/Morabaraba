@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morabaraba", "Morabaraba.csproj", "{73F05220-50BD-4BB4-8104-03A9874D4181}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73F05220-50BD-4BB4-8104-03A9874D4181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F05220-50BD-4BB4-8104-03A9874D4181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F05220-50BD-4BB4-8104-03A9874D4181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F05220-50BD-4BB4-8104-03A9874D4181}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
