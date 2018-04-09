@@ -12,9 +12,15 @@
         void Print(IGame game);
         
         /// <summary>
-        /// Handles an error
+        /// Handles error output
         /// </summary>
         /// <param name="error">Description of the error</param>
         void Error(string error);
+
+        /// <summary>
+        /// Handes request output
+        /// </summary>
+        /// <param name="request"></param>
+        void Request(string request);
     }
 }
