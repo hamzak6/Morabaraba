@@ -1,14 +1,15 @@
 ﻿namespace Morabaraba
 {
     /// <summary>
-    /// A Morabaraba printer
+    /// The Morabaraba Printing interface
     /// </summary>
     public interface IPrinter
     {
         /// <summary>
         /// Prints relevant game information to the user
         /// </summary>
-        void Print();
+        /// <param name="game">Game state to be printed</param>
+        void Print(IGame game);
         
         /// <summary>
         /// Handles an error
