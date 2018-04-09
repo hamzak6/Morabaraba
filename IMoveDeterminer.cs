@@ -14,5 +14,10 @@
         /// Gets the next move
         /// </summary>
         Move NextMove { get; }
+
+        /// <summary>
+        /// Transition the moves
+        /// </summary>
+        void Transition();
     }
 }
