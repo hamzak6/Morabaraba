@@ -1,7 +1,7 @@
 ﻿namespace Morabaraba
 {
     /// <summary>
-    /// Morabaraba move acceptor
+    /// Morabaraba move acceptor interface
     /// </summary>
     public interface IMoveAcceptor
     {
