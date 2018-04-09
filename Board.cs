@@ -175,7 +175,15 @@ namespace Morabaraba
             var x = millList.SelectMany(i => i);
             return x.ToArray();
         }
-        
+
+        public int CowsLeft(Colour player)
+        {
+            return
+                _occupations
+                    .Select(occupation => occupation.Value == player)
+                    .Count();
+        }
+
         private char OccupantChar(Coordinate coordinate)
         {
             if (!_occupations.ContainsKey(coordinate))
