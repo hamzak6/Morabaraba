@@ -23,6 +23,6 @@
         /// <summary>
         /// Gets or sets the last played move
         /// </summary>
-        Move LastPlayed { get; set; }
+        Move? LastPlayed { get; set; }
     }
 }
