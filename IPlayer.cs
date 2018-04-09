@@ -16,7 +16,7 @@ namespace Morabaraba
         /// <summary>
         /// Called every time a player's cow is shot
         /// </summary>
-        /// <exception cref="InvalidOperationException">Thrown when method is called after 10th time</exception>
+        /// <exception cref="InvalidOperationException">Thrown when method is called after 2 cows remain</exception>
         void Shot();
         
         /// <summary>
