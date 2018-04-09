@@ -1,5 +1,6 @@
 ﻿namespace Morabaraba
 {
+    /// <inheritdoc />
     /// <summary>
     /// An implementation of the Morabaraba Game interface
     /// </summary>

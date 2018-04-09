@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Runtime.InteropServices;
 
 namespace Morabaraba
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Implementation of Move Acceptor
+    /// </summary>
     public class MoveAcceptor : IMoveAcceptor
     {
         private readonly IScanner _scanner;

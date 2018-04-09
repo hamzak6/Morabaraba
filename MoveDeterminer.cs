@@ -1,5 +1,9 @@
 ﻿namespace Morabaraba
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Implementation of Move Determiner
+    /// </summary>
     public class MoveDeterminer : IMoveDeterminer
     {
         private readonly IGame _game;

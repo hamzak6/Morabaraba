@@ -2,6 +2,7 @@
 
 namespace Morabaraba
 {
+    /// <inheritdoc />
     /// <summary>
     /// Implementation of a Morabaraba Player
     /// </summary>

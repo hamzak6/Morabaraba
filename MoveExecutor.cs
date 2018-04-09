@@ -2,6 +2,10 @@
 
 namespace Morabaraba
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Implementation of Move Executor
+    /// </summary>
     public class MoveExecutor : IMoveExecutor
     {
         private readonly IGame _game;
