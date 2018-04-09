@@ -6,7 +6,7 @@
     public interface IMoveAcceptor
     {
         /// <summary>
-        /// Accepts the correctly scanned input for a Morabaraba move
+        /// Accepts the scanned input for a Morabaraba move
         /// </summary>
         void Accept();
     }
