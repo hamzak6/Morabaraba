@@ -8,6 +8,6 @@
         /// <summary>
         /// Accepts the scanned input for a Morabaraba move
         /// </summary>
-        void Accept();
+        Coordinate[] Accept();
     }
 }
