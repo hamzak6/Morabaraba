@@ -16,10 +16,10 @@ namespace Morabaraba
         bool Adjacent(Coordinate a, Coordinate b);
 
         /// <summary>
-        /// Are all the coordinates occupied?
+        /// Get whether all the coordinates are occupied
+        /// 
         /// </summary>
-        /// <returns>Whether the coordinates are all occupied</returns>
-        bool AllOccupied();
+        bool AllCoordinatesOccupied { get; }
         
         /// <summary>
         /// Place a cow onto a coordinate

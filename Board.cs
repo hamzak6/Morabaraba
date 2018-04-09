@@ -67,6 +67,8 @@ namespace Morabaraba
             return Adjacent(a, b, out Line _);
         }
 
+        public bool AllCoordinatesOccupied => _occupations.Count == _coordinates.Count;
+
         public void Place(Coordinate coordinate, Colour cow)
         {
             if (IsOccupied(coordinate))
