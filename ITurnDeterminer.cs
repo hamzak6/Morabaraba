@@ -6,10 +6,8 @@
     public interface ITurnDeterminer
     {
         /// <summary>
-        /// Whose turn is it?
+        /// Gets whose turn it is
         /// </summary>
-        /// <param name="game">The game state</param>
-        /// <returns>The colour of the player with the turn</returns>
-        Colour WhoseTurn(IGame game);
+        Colour Turn { get; }
     }
 }
