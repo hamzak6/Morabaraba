@@ -9,5 +9,10 @@
         /// Gets the current move
         /// </summary>
         Move CurrentMove { get; }
+        
+        /// <summary>
+        /// Gets the next move
+        /// </summary>
+        Move NextMove { get; }
     }
 }
