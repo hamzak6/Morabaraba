@@ -8,19 +8,16 @@
         /// <summary>
         /// Prints relevant game information to the user
         /// </summary>
-        /// <param name="game">Game state to be printed</param>
-        void Print(IGame game);
+        void Print();
         
         /// <summary>
-        /// Handles error output
+        /// Gets or sets error output
         /// </summary>
-        /// <param name="error">Description of the error</param>
-        void Error(string error);
+        string Error { get; set; }
 
         /// <summary>
-        /// Handes request output
+        /// Gets or sets request output
         /// </summary>
-        /// <param name="request"></param>
-        void Request(string request);
+        string Request { get; set; }
     }
 }
