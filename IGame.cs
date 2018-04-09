@@ -19,5 +19,10 @@
         /// Get a Morabaraba Light Player
         /// </summary>
         IPlayer LightPlayer { get; }
+        
+        /// <summary>
+        /// Gets or sets the last played move
+        /// </summary>
+        Move LastPlayed { get; set; }
     }
 }
