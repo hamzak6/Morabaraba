@@ -11,6 +11,15 @@
         {
             get
             {
+                const int limitForLoss = 2;
+                if (_game.DarkPlayer.CowsLeft == limitForLoss ||
+                    _game.DarkPlayer.Phase == Phase.Moving &&
+                    _game.Board.CanMove(Colour.Dark))
+                    return Move.LightWins;
+                if (_game.LightPlayer.CowsLeft == limitForLoss ||
+                    _game.LightPlayer.Phase == Phase.Moving &&
+                    _game.Board.CanMove(Colour.Light))
+                    return Move.DarkWins;
                 if ((_game.DarkPlayer.Phase == Phase.Flying || _game.LightPlayer.Phase == Phase.Flying) &&
                     !_shootDeterminer.CanShoot)
                     _flightsWithoutShots++;
@@ -20,11 +29,6 @@
                 if (turnLimitForDraw == _flightsWithoutShots ||
                     _game.Board.AllCoordinatesOccupied && !_shootDeterminer.CanShoot)
                     return Move.Draw;
-                const int limitForLoss = 2;
-                if (_game.DarkPlayer.CowsLeft == limitForLoss)
-                    return Move.LightWins;
-                if (_game.LightPlayer.CowsLeft == limitForLoss)
-                    return Move.DarkWins;
                 if (_turnDeterminer.Turn == Colour.Dark)
                 {
                     if (_shootDeterminer.CanShoot)
