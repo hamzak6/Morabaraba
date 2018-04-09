@@ -87,5 +87,7 @@ namespace Morabaraba
         /// <param name="player">The colour of the player</param>
         /// <returns>The collected mills</returns>
         Coordinate[][] Mills(Colour player);
+
+        int CowsLeft(Colour player);
     }
 }
