@@ -59,6 +59,13 @@ namespace Morabaraba
         bool AllInAMill(Colour player);
 
         /// <summary>
+        /// Are the cows of the player capable of moving?
+        /// </summary>
+        /// <param name="player">The colour of the player</param>
+        /// <returns>Whether any of the cows can move</returns>
+        bool CanMove(Colour player);
+
+        /// <summary>
         /// Is the coordinate ooccupied?
         /// </summary>
         /// <param name="coordinate">The coordinate to be checked</param>
