@@ -14,6 +14,12 @@ namespace Morabaraba
         /// <param name="b">Second coordinate</param>
         /// <returns>Whether the two are adjacent to each other</returns>
         bool Adjacent(Coordinate a, Coordinate b);
+
+        /// <summary>
+        /// Are all the coordinates occupied?
+        /// </summary>
+        /// <returns>Whether the coordinates are all occupied</returns>
+        bool AllOccupied();
         
         /// <summary>
         /// Place a cow onto a coordinate
