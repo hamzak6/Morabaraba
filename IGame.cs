@@ -19,5 +19,10 @@
         /// Get a Morabaraba Light Player
         /// </summary>
         IPlayer LightPlayer { get; }
+        
+        /// <summary>
+        /// Gets or sets the current move
+        /// </summary>
+        Move CurrentMove { get; set; }
     }
 }
