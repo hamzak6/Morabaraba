@@ -8,6 +8,14 @@ namespace Morabaraba
     public interface IBoard
     {
         /// <summary>
+        /// Are two coordinates adjacent to each other?
+        /// </summary>
+        /// <param name="a">First coordinate</param>
+        /// <param name="b">Second coordinate</param>
+        /// <returns>Whether the two are adjacent to each other</returns>
+        bool Adjacent(Coordinate a, Coordinate b);
+        
+        /// <summary>
         /// Place a cow onto a coordinate
         /// </summary>
         /// <param name="coordinate"></param>
