@@ -28,5 +28,10 @@ namespace Morabaraba
         /// Gets the phase the player is in
         /// </summary>
         Phase Phase { get; }
+        
+        /// <summary>
+        /// Get the cows left available to play
+        /// </summary>
+        int CowsLeft { get; }
     }
 }
