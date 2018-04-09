@@ -2,6 +2,7 @@
 
 namespace Morabaraba
 {
+    /// <inheritdoc />
     /// <summary>
     /// Implementation of Morabaraba printer
     /// </summary>
@@ -11,6 +12,8 @@ namespace Morabaraba
         
         public void Print()
         {
+            Console.Clear();
+            Console.Title = "Morabaraba";
             const string title = @"                                                  _                                                       _                                                 
                  )))           xxx           ((_           ___           ,,,           ___           ((_           ___           ,,,           ___      
                 (o o)         (o o)         (o o)         (o o)         (o o)         (o o)         (o o)         (o o)         (o o)         (o o)     
