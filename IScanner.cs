@@ -8,7 +8,7 @@
         /// <summary>
         /// Scan and parse coordinates input by the user
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The scanned coordinates</returns>
         Coordinate[] Scan();
     }
 }
