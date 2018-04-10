@@ -102,5 +102,13 @@ namespace Morabaraba
         /// <param name="mill2">Second mill</param>
         /// <returns>Whether the mills are the same</returns>
         bool SameMill(Coordinate[] mill1, Coordinate[] mill2);
+
+        /// <summary>
+        /// Obtains the differences in the mill collections
+        /// </summary>
+        /// <param name="mills1">First mill collection</param>
+        /// <param name="mills2">Second mill collection</param>
+        /// <returns>The difference between the two mill collections</returns>
+        Coordinate[][] MillDifference(Coordinate[][] mills1, Coordinate[][] mills2);
     }
 }
