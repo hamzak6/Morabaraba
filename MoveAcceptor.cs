@@ -107,7 +107,6 @@ namespace Morabaraba
                     _printer.Print();
                     return;
                 }
-
                 RequestForCurrentMove(_moveDeterminer.CurrentMove);
                 _printer.Print();
                 var coordinates = _scanner.Scan();
@@ -116,11 +115,9 @@ namespace Morabaraba
                     _printer.Error = "Mismatch between expected and actual coordinates. Try again!";
                     continue;
                 }
-
                 var error = _moveExecutor.Execute(_moveDeterminer.CurrentMove, coordinates);
                 if (error != null)
                     _printer.Error = error;
-
             }
         }
     }
