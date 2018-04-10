@@ -96,14 +96,6 @@ namespace Morabaraba
         Coordinate[][] Mills(Colour player);
 
         /// <summary>
-        /// Checks if the mills are the same
-        /// </summary>
-        /// <param name="mill1">First mill</param>
-        /// <param name="mill2">Second mill</param>
-        /// <returns>Whether the mills are the same</returns>
-        bool SameMill(Coordinate[] mill1, Coordinate[] mill2);
-
-        /// <summary>
         /// Obtains the differences in the mill collections
         /// </summary>
         /// <param name="mills1">First mill collection</param>
