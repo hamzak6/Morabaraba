@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets whether the player shoot?
         /// </summary>
-        bool CanShoot { get; }
+        bool CanShoot(Colour player);
     }
 }
