@@ -96,11 +96,11 @@ namespace Morabaraba
         Coordinate[][] Mills(Colour player);
 
         /// <summary>
-        /// Obtains the differences in the mill collections
+        /// Is there a difference between the mill collections
         /// </summary>
         /// <param name="mills1">First mill collection</param>
         /// <param name="mills2">Second mill collection</param>
-        /// <returns>The difference between the two mill collections</returns>
-        Coordinate[][] MillDifference(Coordinate[][] mills1, Coordinate[][] mills2);
+        /// <returns>Whether there is a difference</returns>
+        bool AreMillsDifferent(Coordinate[][] mills1, Coordinate[][] mills2);
     }
 }
