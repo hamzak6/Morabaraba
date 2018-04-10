@@ -12,6 +12,7 @@ namespace Morabaraba
         private readonly IPrinter _printer;
         private readonly IMoveDeterminer _moveDeterminer;
         private readonly IMoveExecutor _moveExecutor;
+        private readonly ITurnDeterminer _turnDeterminer;
 
         /// <summary>
         /// Initialises the Move Acceptor
@@ -19,14 +20,16 @@ namespace Morabaraba
         /// <param name="scanner">The scanner that will be used for accepting input</param>
         /// <param name="printer">The printer that will be used by the move acceptor</param>
         /// <param name="moveDeterminer">The move determiner used by the acceptor</param>
-        /// <param name="moveExecutor">The move executor used by the executor</param>
+        /// <param name="moveExecutor">The move executor used by the acceptor</param>
+        /// <param name="turnDeterminer">The turn determiner to be used by the acceptor</param>
         public MoveAcceptor(IScanner scanner, IPrinter printer, IMoveDeterminer moveDeterminer,
-            IMoveExecutor moveExecutor)
+            IMoveExecutor moveExecutor, ITurnDeterminer turnDeterminer)
         {
             _scanner = scanner;
             _printer = printer;
             _moveDeterminer = moveDeterminer;
             _moveExecutor = moveExecutor;
+            _turnDeterminer = turnDeterminer;
         }
 
         private bool IsGameOver(Move move)
@@ -118,6 +121,8 @@ namespace Morabaraba
                 var error = _moveExecutor.Execute(_moveDeterminer.CurrentMove, coordinates);
                 if (error != null)
                     _printer.Error = error;
+                else
+                    _turnDeterminer.Played();
             }
         }
     }

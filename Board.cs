@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Morabaraba
 {
+    /// <inheritdoc />
     /// <summary>
     /// A Morabaraba Board
     /// </summary>
@@ -49,8 +50,7 @@ namespace Morabaraba
                 { Coordinate.G4, new Dictionary<Coordinate, Line> { { Coordinate.F4, Line.Column }, { Coordinate.G1, Line.Row }, { Coordinate.G7, Line.Row } } },
                 { Coordinate.G7, new Dictionary<Coordinate, Line> { { Coordinate.D7, Line.Column }, { Coordinate.F6, Line.Diagonal }, { Coordinate.G4, Line.Row } } }
             };
-        }
-
+        }        
         private bool Adjacent(Coordinate a, Coordinate b, out Line line)
         {
             if (_coordinates[a].ContainsKey(b))
@@ -133,6 +133,18 @@ namespace Morabaraba
             return cows == mills; // Making use of the duplication
         }
 
+        public bool CanMove(Colour player)
+        {
+            return
+                _occupations
+                    .Where(occupant => occupant.Value == player)
+                    .Select(occupant => occupant.Key)
+                    .Select(Neighbours)
+                    .SelectMany(i => i)
+                    .Where(IsOccupied)
+                    .Any();
+        }
+
         public bool IsOccupied(Coordinate coordinate)
         {
             return _occupations.ContainsKey(coordinate);
@@ -165,6 +177,7 @@ namespace Morabaraba
             return mills;
         }
 
+        // WITHOUT DUPLICATES
         public Coordinate[][] Mills(Colour player)
         {
             var millList = _occupations
@@ -172,16 +185,41 @@ namespace Morabaraba
                 .Where(occupation => InAMill(occupation.Key))
                 .Select(occupation => Mills(occupation.Key))
                 .ToList();
-            var x = millList.SelectMany(i => i);
+            var x = millList
+                .SelectMany(i => i);
             return x.ToArray();
         }
 
-        public int CowsLeft(Colour player)
+        private class MillEquality : IEqualityComparer<Coordinate[]>
         {
-            return
-                _occupations
-                    .Select(occupation => occupation.Value == player)
-                    .Count();
+            public bool Equals(Coordinate[] mill1, Coordinate[] mill2)
+            {
+                if (mill1.Length != mill2.Length)
+                    throw new InvalidOperationException();
+                for (var i = 0; i < 3; i++)
+                    if (mill1[i] != mill2[i])
+                        return false;
+                return true;
+            }
+
+            public int GetHashCode(Coordinate[] obj)
+            {
+                return base.GetHashCode();
+            }
+        }
+
+        public bool AreMillsDifferent(Coordinate[][] mills1, Coordinate[][] mills2)
+        {
+            var equality = new MillEquality();
+            var intersection = mills1.
+                Intersect(mills2, equality).
+                Distinct(equality).
+                ToArray();
+            var union = mills1.
+                Union(mills2, equality).
+                Distinct(equality).
+                ToArray();
+            return intersection.Length == union.Length;
         }
 
         private char OccupantChar(Coordinate coordinate)
