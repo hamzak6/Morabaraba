@@ -94,5 +94,13 @@ namespace Morabaraba
         /// <param name="player">The colour of the player</param>
         /// <returns>The collected mills</returns>
         Coordinate[][] Mills(Colour player);
+
+        /// <summary>
+        /// Checks if the mills are the same
+        /// </summary>
+        /// <param name="mill1">First mill</param>
+        /// <param name="mill2">Second mill</param>
+        /// <returns>Whether the mills are the same</returns>
+        bool SameMill(Coordinate[] mill1, Coordinate[] mill2);
     }
 }
