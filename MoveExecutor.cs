@@ -49,6 +49,9 @@ namespace Morabaraba
             if (!_game.Board.IsOccupied(coordinate))
                 return "Cannot shoot at nothing. Try again!";
             var cow = _game.Board.Occupant(coordinate);
+            if (!_game.Board.AllInAMill(cow) &&
+                _game.Board.InAMill(coordinate))
+                return "Cannot shoot at a cow in a mill. Try again!";
             _game.Board.Displace(coordinate);
             Player(cow).Shot();
             return null;
