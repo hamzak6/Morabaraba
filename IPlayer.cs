@@ -20,9 +20,9 @@ namespace Morabaraba
         void Shot();
         
         /// <summary>
-        /// Gets or sets the mill to not be formed on the next move
+        /// Gets or sets the mills to not be used on the next move
         /// </summary>
-        Coordinate[] ForbiddenMill { get; set; }
+        Coordinate[][] ForbiddenMills { get; set; }
         
         /// <summary>
         /// Gets the phase the player is in

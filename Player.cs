@@ -25,7 +25,7 @@ namespace Morabaraba
             _shot++;
         }
 
-        public Coordinate[] ForbiddenMill { get; set; }
+        public Coordinate[][] ForbiddenMills { get; set; }
         
         
         public Phase Phase
