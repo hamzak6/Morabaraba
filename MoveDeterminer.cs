@@ -14,12 +14,16 @@
         private bool Win(ref Move result)
         {
             const int limitForLoss = 2;
-            if (_game.DarkPlayer.CowsLeft == limitForLoss)
+            if (_game.DarkPlayer.CowsLeft == limitForLoss ||
+                !_game.Board.CanMove(Colour.Dark) && _game.Player(Colour.Dark).Phase == Phase.Moving &&
+                (_game.Board.CanMove(Colour.Light) || _game.Player(Colour.Light).Phase != Phase.Moving))
             {
                 result = Move.LightWins;
                 return true;
             }
-            if (_game.LightPlayer.CowsLeft == limitForLoss)
+            if (_game.LightPlayer.CowsLeft == limitForLoss ||
+                !_game.Board.CanMove(Colour.Light) && _game.Player(Colour.Light).Phase == Phase.Moving &&
+                (_game.Board.CanMove(Colour.Dark) || _game.Player(Colour.Dark).Phase != Phase.Moving))
             {
                 result = Move.DarkWins;
                 return true;
@@ -31,7 +35,9 @@
         {
             const int turnLimitForDraw = 10;
             if (turnLimitForDraw == _flightsWithoutShots ||
-                _game.Board.AllCoordinatesOccupied)
+                _game.Board.AllCoordinatesOccupied &&
+                 Phase.Moving == _game.Player(Colour.Dark).Phase &&
+                 Phase.Moving == _game.Player(Colour.Light).Phase)
             {
                 result = Move.Draw;
                 return true;
@@ -54,7 +60,10 @@
             if (_turnDeterminer.Turn == Colour.Dark)
             {
                 if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
+                {
+                    _game.DarkPlayer.ForbiddenMills = _game.Board.Mills(Colour.Dark);
                     return Move.DarkShoot;
+                }
                 switch (_game.DarkPlayer.Phase)
                 {
                     case Phase.Placing:
@@ -68,7 +77,10 @@
             else
             {
                 if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
+                {
+                    _game.LightPlayer.ForbiddenMills = _game.Board.Mills(Colour.Light);
                     return Move.LightShoot;
+                }
                 switch (_game.LightPlayer.Phase)
                 {
                     case Phase.Placing:
