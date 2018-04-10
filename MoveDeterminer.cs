@@ -10,58 +10,87 @@
         private readonly ITurnDeterminer _turnDeterminer;
         private readonly IShootDeterminer _shootDeterminer;
         private int _flightsWithoutShots;
+
+        private bool Win(ref Move result)
+        {
+            const int limitForLoss = 2;
+            if (_game.DarkPlayer.CowsLeft == limitForLoss)
+            {
+                result = Move.LightWins;
+                return true;
+            }
+            if (_game.LightPlayer.CowsLeft == limitForLoss)
+            {
+                result = Move.DarkWins;
+                return true;
+            }
+            return false;
+        }
+
+        private bool Draw(ref Move result)
+        {
+            const int turnLimitForDraw = 10;
+            if (turnLimitForDraw == _flightsWithoutShots ||
+                _game.Board.AllCoordinatesOccupied)
+            {
+                result = Move.Draw;
+                return true;
+            }
+            return false;
+        }
+
+        private void FlyWithoutShooting()
+        {
+            if ((_game.DarkPlayer.Phase == Phase.Flying || 
+                 _game.LightPlayer.Phase == Phase.Flying) &&
+                !_shootDeterminer.CanShoot(_turnDeterminer.Turn))
+                _flightsWithoutShots++;
+            if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
+                _flightsWithoutShots = 0;
+        }
+
+        private Move DetermineMove()
+        {
+            if (_turnDeterminer.Turn == Colour.Dark)
+            {
+                if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
+                    return Move.DarkShoot;
+                switch (_game.DarkPlayer.Phase)
+                {
+                    case Phase.Placing:
+                        return Move.DarkPlace;
+                    case Phase.Moving:
+                        return Move.DarkMove;
+                    case Phase.Flying:
+                        return Move.DarkFly;
+                }
+            }
+            else
+            {
+                if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
+                    return Move.LightShoot;
+                switch (_game.LightPlayer.Phase)
+                {
+                    case Phase.Placing:
+                        return Move.LightPlace;
+                    case Phase.Moving:
+                        return Move.LightMove;
+                    case Phase.Flying:
+                        return Move.LightFly;
+                }
+            }
+            return Move.DarkPlace;
+        }
         
         public Move CurrentMove
         {
             get
-            {
-                const int limitForLoss = 2;
-                if (_game.DarkPlayer.CowsLeft == limitForLoss ||
-                    _game.DarkPlayer.Phase == Phase.Moving &&
-                    _game.Board.CanMove(Colour.Dark))
-                    return Move.LightWins;
-                if (_game.LightPlayer.CowsLeft == limitForLoss ||
-                    _game.LightPlayer.Phase == Phase.Moving &&
-                    _game.Board.CanMove(Colour.Light))
-                    return Move.DarkWins;
-                if ((_game.DarkPlayer.Phase == Phase.Flying || _game.LightPlayer.Phase == Phase.Flying) &&
-                    !_shootDeterminer.CanShoot)
-                    _flightsWithoutShots++;
-                if (_shootDeterminer.CanShoot)
-                    _flightsWithoutShots = 0;
-                const int turnLimitForDraw = 10;
-                if (turnLimitForDraw == _flightsWithoutShots ||
-                    _game.Board.AllCoordinatesOccupied && !_shootDeterminer.CanShoot)
-                    return Move.Draw;
-                if (_turnDeterminer.Turn == Colour.Dark)
-                {
-                    if (_shootDeterminer.CanShoot)
-                        return Move.DarkShoot;
-                    switch (_game.DarkPlayer.Phase)
-                    {
-                        case Phase.Placing:
-                            return Move.DarkPlace;
-                        case Phase.Moving:
-                            return Move.DarkMove;
-                        case Phase.Flying:
-                            return Move.DarkFly;
-                    }
-                }
-                else
-                {
-                    if (_shootDeterminer.CanShoot)
-                        return Move.LightShoot;
-                    switch (_game.LightPlayer.Phase)
-                    {
-                        case Phase.Placing:
-                            return Move.LightPlace;
-                        case Phase.Moving:
-                            return Move.LightMove;
-                        case Phase.Flying:
-                            return Move.LightFly;
-                    }
-                }
-                return Move.DarkPlace;
+            { 
+                FlyWithoutShooting();
+                var currentMove = Move.DarkMove;
+                if (Draw(ref currentMove) || Win(ref currentMove))
+                    return currentMove;
+                return DetermineMove();
             }
         }
 
