@@ -24,5 +24,12 @@
         /// Gets or sets the last played move
         /// </summary>
         Move? LastPlayed { get; set; }
+        
+        /// <summary>
+        /// Get the player of a given colour
+        /// </summary>
+        /// <param name="colour">The colour of the player</param>
+        /// <returns>The player</returns>
+        IPlayer Player(Colour colour);
     }
 }

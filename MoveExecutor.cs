@@ -9,20 +9,13 @@ namespace Morabaraba
     public class MoveExecutor : IMoveExecutor
     {
         private readonly IGame _game;
-
-        private IPlayer Player(Colour colour)
-        {
-            return colour == Colour.Light
-                ? _game.LightPlayer
-                : _game.DarkPlayer;
-        }
         
         private string Place(Coordinate coordinate, Colour cow)
         {
             if (_game.Board.IsOccupied(coordinate))
                 return "Cannot occupy an occupied coordinate. Try again!";
             _game.Board.Place(coordinate, cow);
-            Player(cow).Placed();
+            _game.Player(cow).Placed();
             return null;
         }
 
@@ -53,7 +46,7 @@ namespace Morabaraba
                 _game.Board.InAMill(coordinate))
                 return "Cannot shoot at a cow in a mill. Try again!";
             _game.Board.Displace(coordinate);
-            Player(cow).Shot();
+            _game.Player(cow).Shot();
             return null;
         }
         

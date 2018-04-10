@@ -28,5 +28,13 @@
             LightPlayer = lightPlayer;
             LastPlayed = lastPlayed;
         }
+
+        public IPlayer Player(Colour colour)
+        {
+            return
+                colour == Colour.Dark
+                    ? DarkPlayer
+                    : LightPlayer;
+        }
     }
 }
