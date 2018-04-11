@@ -1,5 +1,5 @@
 # Morabaraba
 A .NET Core Implementation of Morabaraba
 
-# Dependencies
+## Dependencies
 .NET Core 2 and above
