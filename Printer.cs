@@ -13,6 +13,8 @@ namespace Morabaraba
         public void Print()
         {
             Console.Clear();
+            // Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Title = "Morabaraba";
             const string title = @"                                                  _                                                       _                                                 
                  )))           xxx           ((_           ___           ,,,           ___           ((_           ___           ,,,           ___      
@@ -21,9 +23,9 @@ namespace Morabaraba
             ";
             var board = _game.Board.ToString();
             var error = 
-                $@"                                                            {Error}
+                $@"                                                    {Error}
             ";
-            var request = $@"                                                    {Request}: ";
+            var request = $@"                                                    {Request}";
             var display = title + board + error + request;
             Console.Write(display);
         }

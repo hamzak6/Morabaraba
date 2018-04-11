@@ -85,26 +85,33 @@ namespace Morabaraba
 
         private List<Coordinate> Neighbours(Coordinate coordinate)
         {
-            return _coordinates[coordinate].Keys.ToList();
+            return _coordinates[coordinate]
+                .Select(i => i.Key)
+                .ToList();
         }
 
         private List<List<Coordinate>> Lines(Coordinate coordinate)
         {
             var neighbours = Neighbours(coordinate);
-            var neighboursNeighbours = neighbours.Select(Neighbours) as List<List<Coordinate>>;
+            var neighboursNeighbours =
+                neighbours
+                    .Select(Neighbours)
+                    .Select(xs => 
+                        xs
+                            .Where(x => x != coordinate)
+                            .ToList())
+                    .ToList();
             var lines = new List<List<Coordinate>>();
             for (var i = 0; i < neighbours.Count; i++)
             {
                 var neighbour = neighbours[i];
-                if (neighboursNeighbours == null)
-                    continue;
                 for (var j = 0; j < neighboursNeighbours[i].Count; j++)
                 {
                     var neighboursNeighbour = neighboursNeighbours[i][j];
                     var line1 = _coordinates[coordinate][neighbour];
                     var line2 = _coordinates[neighbour][neighboursNeighbour];
                     if (line1 == line2)
-                        lines.Add(new List<Coordinate>() {neighbour, neighboursNeighbour});
+                        lines.Add(new List<Coordinate>() { coordinate, neighbour, neighboursNeighbour });
                 }
             }
             return lines;
@@ -113,24 +120,30 @@ namespace Morabaraba
         public bool InAMill(Coordinate coordinate)
         {
             var mills = Mills(coordinate);
-            return mills != null && mills.Length >= 1;
+            var inAMill = mills != null && mills.Length >= 1;
+            return inAMill;
         }
 
         public bool InAMill(Colour player)
         {
-            return _occupations.Any(occupation => occupation.Value == player && InAMill(occupation.Key));
+            return _occupations.
+                Any(occupation => 
+                    occupation.Value == player && 
+                    InAMill(occupation.Key));
         }
 
         public bool AllInAMill(Colour player)
         {
-            var cows = _occupations.
-                Select(x => x.Value == player).
-                Count();
-            var mills = _occupations
-                .Where(x => x.Value == player)
-                .Select(x => InAMill(x.Key))
-                .Count();
-            return cows == mills; // Making use of the duplication
+            var cows =
+                _occupations
+                    .Where(x => x.Value == player)
+                    .Select(x => x.Key)
+                    .ToArray();
+            var inAMill =
+                    cows
+                        .Where(InAMill)
+                        .ToArray();
+            return inAMill.Length == cows.Length;
         }
 
         public bool CanMove(Colour player)
@@ -161,19 +174,14 @@ namespace Morabaraba
             if (!IsOccupied(coordinate))
                 throw new InvalidOperationException();
             var occupant = Occupant(coordinate);
-            var lines = Lines(coordinate);
-            var mills = new Coordinate[lines.Count][];
-            for (var i = 0; i < lines.Count; i++)
-            {
-                var line = lines[i];
-                if (!(IsOccupied(line[0]) && IsOccupied(line[1])))
-                    continue;
-                if (!(Occupant(line[0]) == occupant && occupant == Occupant(line[1])))
-                    continue;
-                var mill = new List<Coordinate>() {coordinate, line[0], line[1]};
-                mill.Sort();
-                mills[i] = mill.ToArray();
-            }
+            var mills =
+                Lines(coordinate)
+                    .Where(line =>
+                        IsOccupied(line[0]) && occupant == Occupant(line[0]) &&
+                        IsOccupied(line[1]) && occupant == Occupant(line[1]) &&
+                        IsOccupied(line[2]) && occupant == Occupant(line[2]))
+                    .Select(line => line.ToArray())
+                    .ToArray();
             return mills;
         }
 
@@ -183,17 +191,25 @@ namespace Morabaraba
             var millList = _occupations
                 .Where(occupation => occupation.Value == player)
                 .Where(occupation => InAMill(occupation.Key))
-                .Select(occupation => Mills(occupation.Key))
+                .Select(occupation => 
+                    Mills(occupation.Key))
                 .ToList();
             var x = millList
-                .SelectMany(i => i);
-            return x.ToArray();
+                .SelectMany(i => i)
+                .ToArray();
+            return x;
         }
 
         private class MillEquality : IEqualityComparer<Coordinate[]>
         {
             public bool Equals(Coordinate[] mill1, Coordinate[] mill2)
             {
+                var m1 = mill1.ToList();
+                var m2 = mill2.ToList();
+                m1.Sort();
+                m2.Sort();
+                mill1 = m1.ToArray();
+                mill2 = m2.ToArray();
                 if (mill1.Length != mill2.Length)
                     throw new InvalidOperationException();
                 for (var i = 0; i < 3; i++)
@@ -210,6 +226,10 @@ namespace Morabaraba
 
         public bool AreMillsDifferent(Coordinate[][] mills1, Coordinate[][] mills2)
         {
+            if (mills1 == null && mills2 == null)
+                return false;
+            if (mills1 == null || mills2 == null)
+                return true;
             var equality = new MillEquality();
             var intersection = mills1.
                 Intersect(mills2, equality).
@@ -219,7 +239,7 @@ namespace Morabaraba
                 Union(mills2, equality).
                 Distinct(equality).
                 ToArray();
-            return intersection.Length == union.Length;
+            return union.Length != intersection.Length;
         }
 
         private char OccupantChar(Coordinate coordinate)

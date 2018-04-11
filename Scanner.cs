@@ -14,6 +14,7 @@ namespace Morabaraba
         {
             while (true)
             {
+                _printer.Print();
                 const string error = "Unrecognised input. Try again!";
                 var input = Console.ReadLine().Trim().Split(' ');
                 if (input

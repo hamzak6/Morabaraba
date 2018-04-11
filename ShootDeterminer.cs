@@ -10,10 +10,11 @@
         
         public bool CanShoot(Colour player)
         {
-            return
-                _game.Board.AreMillsDifferent(
-                    _game.Player(player).ForbiddenMills,
-                    _game.Board.Mills(player));
+            var inAMill =
+                _game.Board.InAMill(player) && 
+                (_game.Player(player).ForbiddenMills == null || // for the first time are mill is received
+                _game.Board.AreMillsDifferent(_game.Player(player).ForbiddenMills, _game.Board.Mills(player)));
+            return inAMill;
         }
 
         public ShootDeterminer(IGame game)

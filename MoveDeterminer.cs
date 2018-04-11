@@ -60,10 +60,7 @@
             if (_turnDeterminer.Turn == Colour.Dark)
             {
                 if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
-                {
-                    _game.DarkPlayer.ForbiddenMills = _game.Board.Mills(Colour.Dark);
                     return Move.DarkShoot;
-                }
                 switch (_game.DarkPlayer.Phase)
                 {
                     case Phase.Placing:
@@ -77,10 +74,7 @@
             else
             {
                 if (_shootDeterminer.CanShoot(_turnDeterminer.Turn))
-                {
-                    _game.LightPlayer.ForbiddenMills = _game.Board.Mills(Colour.Light);
                     return Move.LightShoot;
-                }
                 switch (_game.LightPlayer.Phase)
                 {
                     case Phase.Placing:

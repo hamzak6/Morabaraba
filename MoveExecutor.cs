@@ -10,15 +10,22 @@ namespace Morabaraba
     {
         private readonly IGame _game;
         
+        private string PlaceMove(Coordinate coordinate, Colour cow)
+        {
+            var error = Place(coordinate, cow);
+            if (error == null)
+                _game.Player(cow).Placed();
+            return error;
+        }
+
         private string Place(Coordinate coordinate, Colour cow)
         {
             if (_game.Board.IsOccupied(coordinate))
                 return "Cannot occupy an occupied coordinate. Try again!";
             _game.Board.Place(coordinate, cow);
-            _game.Player(cow).Placed();
             return null;
         }
-
+        
         private string MoveCow(Coordinate source, Coordinate destination)
         {
             return !_game.Board.Adjacent(source, destination)
@@ -37,16 +44,21 @@ namespace Morabaraba
             return Place(destination, cow);
         }
 
-        private string Shoot(Coordinate coordinate)
+        private string Shoot(Coordinate coordinate, Colour player)
         {
             if (!_game.Board.IsOccupied(coordinate))
                 return "Cannot shoot at nothing. Try again!";
             var cow = _game.Board.Occupant(coordinate);
+            if (player == cow)
+                return "Cannot shoot own cow. Try again!";
             if (!_game.Board.AllInAMill(cow) &&
                 _game.Board.InAMill(coordinate))
                 return "Cannot shoot at a cow in a mill. Try again!";
+            _game.Player(player).ForbiddenMills = _game.Board.Mills(player);
             _game.Board.Displace(coordinate);
+            _game.Player(cow).ForbiddenMills = _game.Board.Mills(cow);
             _game.Player(cow).Shot();
+            
             return null;
         }
         
@@ -59,9 +71,9 @@ namespace Morabaraba
                 case Move.LightWins:
                     throw new InvalidOperationException();
                 case Move.DarkPlace:
-                    return Place(coordinates[0], Colour.Dark);
+                    return PlaceMove(coordinates[0], Colour.Dark);
                 case Move.LightPlace:
-                    return Place(coordinates[0], Colour.Light);
+                    return PlaceMove(coordinates[0], Colour.Light);
                 case Move.DarkMove:
                 case Move.LightMove:
                     return MoveCow(coordinates[0], coordinates[1]);
@@ -69,8 +81,9 @@ namespace Morabaraba
                 case Move.LightFly:
                     return Fly(coordinates[0], coordinates[1]);
                 case Move.DarkShoot:
+                    return Shoot(coordinates[0], Colour.Dark);
                 case Move.LightShoot:
-                    return Shoot(coordinates[0]);
+                    return Shoot(coordinates[0], Colour.Light);
                 default:
                     throw new ArgumentException();
             }
